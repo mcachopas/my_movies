@@ -7,11 +7,11 @@ class MoviesCubit extends Cubit<MoviesStatus> {
   MoviesCubit() : super(MoviesStatus.initial);
 
   late List<Movie> movies;
+  var getIt = GetI;t.instance;
 
   void loadMovies() {
     emit(MoviesStatus.loading);
     try {
-      // Load movies from the repository
       emit(MoviesStatus.loaded);
     } catch (e) {
       emit(MoviesStatus.error);
