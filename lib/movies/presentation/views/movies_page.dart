@@ -21,6 +21,7 @@ class _MoviesPageState extends State<MoviesPage> {
   void initState() {
     moviesCubit = BlocProvider.of<MoviesCubit>(context);
     moviesCubit.loadMovies();
+    // moviesCubit.scrollController.addListener(_onScroll);
     super.initState();
   }
 
@@ -77,11 +78,22 @@ class _MoviesPageState extends State<MoviesPage> {
                 ),
               ),
               Flexible(
-                child: ListView.builder(
-                  itemCount: moviesCubit.movieList.length,
-                  itemBuilder: (context, index) {
-                    return MovieCard(movie: moviesCubit.movieList[index]);
+                child: RefreshIndicator(
+                  triggerMode: RefreshIndicatorTriggerMode.anywhere,
+                  // physics: const AlwaysScrollableScrollPhysics(),
+                  onRefresh: () async {
+                    return moviesCubit.getMoreMovies();
                   },
+                  child: ListView.builder(
+                    scrollDirection: Axis.vertical,
+                    itemCount: moviesCubit.movieList.length,
+                    physics: const AlwaysScrollableScrollPhysics(),
+                    reverse: false,
+                    itemBuilder: (context, index) {
+                      return MovieCard(movie: moviesCubit.movieList[index]);
+                    },
+                    
+                  ),
                 ),
               ),
             ],

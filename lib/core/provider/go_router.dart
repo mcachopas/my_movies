@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:my_movies/homePage/presentation/views/homepage.dart';
 import 'package:my_movies/movies/presentation/views/movies_page.dart';
+import 'package:my_movies/movies/presentation/views/years_multiple_winners.dart';
 
 class AppRouter {
   static final GoRouter router = GoRouter(
@@ -14,6 +15,31 @@ class AppRouter {
         path: '/movies',
         name: 'movies',
         pageBuilder: (context, state) => _rightToLeftTransition(context, state, const MoviesPage()),
+      ),
+      GoRoute(
+        path: '/multiple-winners',
+        name: 'multiple-winners',
+        pageBuilder: (context, state) => _rightToLeftTransition(context, state, const YearsWithMultiWinners()),
+      ),
+      GoRoute(
+        path: '/Top-Winners',
+        name: 'Top-Winners',
+        pageBuilder: (context, state) => _rightToLeftTransition(context, state, const HomePage()),
+      ),
+      GoRoute(
+        path: '/Winners-Interval',
+        name: 'Winners-Interval',
+        pageBuilder: (context, state) => _rightToLeftTransition(context, state, const HomePage()),
+      ),
+      GoRoute(
+        path: '/list-of-winners',
+        name: 'list-of-winners',
+        pageBuilder: (context, state) => _rightToLeftTransition(context, state, const HomePage()),
+      ),
+      GoRoute(
+        path: '/years-with-multi-winners',
+        name: 'years-with-multi-winners',
+        pageBuilder: (context, state) => _rightToLeftTransition(context, state, const HomePage()),
       ),
     ],
   );
