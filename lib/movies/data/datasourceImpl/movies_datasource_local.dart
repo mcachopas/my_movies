@@ -1,9 +1,10 @@
 import 'package:my_movies/movies/data/datadource/movies_datasource.dart';
 import 'package:my_movies/movies/domain/entities/movie.dart';
+import 'package:my_movies/movies/domain/entities/movie_filter.dart';
 
 class MoviesDatasourceLocal implements MoviesDatasource {
   @override
-  Future<List<Movie>> getMovies() async {
+  Future<List<Movie>> getMovies(MovieFilter filter) async {
     return movieList;
   }
 }

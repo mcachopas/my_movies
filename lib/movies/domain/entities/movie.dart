@@ -14,4 +14,15 @@ class Movie {
     required this.producers,
     required this.winner,
   });
+
+  factory Movie.fromJson(Map<String, dynamic> json) {
+    return Movie(
+      id: json['id'],
+      year: json['year'],
+      title: json['title'],
+      studios: List<String>.from(json['studios']),
+      producers: List<String>.from(json['producers']),
+      winner: json['winner'],
+    );
+  }
 }
