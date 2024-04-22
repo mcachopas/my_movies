@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:my_movies/movies/domain/entities/movie.dart';
+import 'package:my_movies/core/widgets/bottom_sheet.dart';
 import 'package:my_movies/movies/presentation/cubit/movies_cubit.dart';
+import 'package:my_movies/movies/presentation/views/side_bar.dart';
+import 'package:my_movies/movies/presentation/widgets/filter.dart';
 import 'package:my_movies/movies/presentation/widgets/movie_card.dart';
+import 'package:my_movies/movies/presentation/widgets/order.dart';
 
 class MoviesPage extends StatefulWidget {
   const MoviesPage({super.key});
@@ -11,37 +14,80 @@ class MoviesPage extends StatefulWidget {
   State<MoviesPage> createState() => _MoviesPageState();
 }
 
-@override
-void initState() {
-  // blocprovider.of<MoviesCubit>(context).loadMovies();
-  // SchedulerBinding.instance.addPostFrameCallback((_) {});
-}
-
 class _MoviesPageState extends State<MoviesPage> {
+  late MoviesCubit moviesCubit;
+
+  @override
+  void initState() {
+    moviesCubit = BlocProvider.of<MoviesCubit>(context);
+    moviesCubit.loadMovies();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
-    MoviesCubit moviesCubit = context.watch<MoviesCubit>();
     return BlocBuilder<MoviesCubit, MoviesStatus>(
       builder: (context, state) {
-        Scaffold(
-      appBar: AppBar(
-        title: const Text('Movies Page'),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          moviesCubit.loadMovies();
-        },
-        child: const Icon(Icons.refresh),
-      ),
-      body: ListView.builder(
-        itemCount: movieList.length,
-        itemBuilder: (context, index) {
-          return MovieCard(movie: moviesCubit.movies[index]);
-        },
-      ),
+        return Scaffold(
+          appBar: AppBar(
+            title: const Text('Movies Page'),
+          ),
+          drawer: const SideBar(),
+          floatingActionButton: FloatingActionButton(
+            onPressed: () {
+              moviesCubit.loadMovies();
+            },
+            child: const Icon(Icons.refresh),
+          ),
+          body: Column(
+            children: [
+              Container(
+                padding: const EdgeInsets.all(10),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    const Expanded(
+                      child: Center(
+                        child: Text(
+                          'Movies',
+                          style: TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                    ),
+                    IconButton(
+                        onPressed: () {
+                          showSimpleCustomModalBottomSheet(
+                            context,
+                            content: const Column(
+                              children: [
+                                Order(),
+                                Filter(),
+                              ],
+                            ),
+                            isDismissible: true
+                          );
+                        },
+                        icon: const Icon(Icons.filter_alt),
+                        iconSize: 30,
+                        color: Colors.deepPurple),
+                  ],
+                ),
+              ),
+              Flexible(
+                child: ListView.builder(
+                  itemCount: moviesCubit.movieList.length,
+                  itemBuilder: (context, index) {
+                    return MovieCard(movie: moviesCubit.movieList[index]);
+                  },
+                ),
+              ),
+            ],
+          ),
+        );
+      },
     );
-     
   }
 }
-
-List<Movie> movieList = [];
