@@ -21,7 +21,6 @@ class _MoviesPageState extends State<MoviesPage> {
   void initState() {
     moviesCubit = BlocProvider.of<MoviesCubit>(context);
     moviesCubit.loadMovies();
-    // moviesCubit.scrollController.addListener(_onScroll);
     super.initState();
   }
 
@@ -60,16 +59,14 @@ class _MoviesPageState extends State<MoviesPage> {
                     ),
                     IconButton(
                         onPressed: () {
-                          showSimpleCustomModalBottomSheet(
-                            context,
-                            content: const Column(
-                              children: [
-                                Order(),
-                                Filter(),
-                              ],
-                            ),
-                            isDismissible: true
-                          );
+                          showSimpleCustomModalBottomSheet(context,
+                              content: const Column(
+                                children: [
+                                  Order(),
+                                  Filter(),
+                                ],
+                              ),
+                              isDismissible: true);
                         },
                         icon: const Icon(Icons.filter_alt),
                         iconSize: 30,
@@ -92,7 +89,6 @@ class _MoviesPageState extends State<MoviesPage> {
                     itemBuilder: (context, index) {
                       return MovieCard(movie: moviesCubit.movieList[index]);
                     },
-                    
                   ),
                 ),
               ),

@@ -1,19 +1,14 @@
-import 'package:my_movies/movies/data/datadource/movies_datasource.dart';
+import 'package:my_movies/movies/data/data_source/movies_data_source.dart';
 import 'package:my_movies/movies/domain/entities/movie.dart';
 import 'package:my_movies/movies/domain/entities/movie_filter.dart';
 import 'package:my_movies/movies/domain/entities/win_count.dart';
 import 'package:my_movies/movies/domain/entities/winner_count.dart';
 import 'package:my_movies/movies/domain/entities/winner_interval.dart';
 
-class MoviesDatasourceLocal implements MoviesDatasource {
+class MoviesDataSourceLocal implements MoviesDataSource {
   @override
   Future<List<Movie>> getMovies(MovieFilter filter) async {
     return movieList;
-  }
-
-  @override
-  Future<List<WinnerInterval>> getWinnerInterval() {
-    throw UnimplementedError();
   }
 
   @override
@@ -23,6 +18,11 @@ class MoviesDatasourceLocal implements MoviesDatasource {
 
   @override
   Future<List<WinnerCount>> getWinnersCountByInterval() {
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<ProducerInterval> getWinnerInterval() {
     throw UnimplementedError();
   }
 }

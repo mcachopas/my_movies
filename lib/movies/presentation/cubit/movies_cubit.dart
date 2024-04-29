@@ -17,7 +17,7 @@ class MoviesCubit extends Cubit<MoviesStatus> {
   late List<Movie> movieList = [];
   late List<WinCount> winCountList = [];
   late List<WinnerCount> winnerCountList = [];
-  late List<WinnerInterval> winnerIntervalList = [];
+  late ProducerInterval? winnerIntervalList = null;
 
   var getIt = GetIt.instance;
   MovieFilter filter = MovieFilter(page: 0, size: 10);
